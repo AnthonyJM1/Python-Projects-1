@@ -1,0 +1,33 @@
+class Book:
+    total_books = 0
+    def __init__(self, title, author, price):
+        self.title=title
+        self.author=author
+        self.price = price 
+        Book.total_books += 1
+    def get_summary(self):
+        return f" Title: {self.title}, Author: {self.author}, Price: ${self.price: .2f}"
+    @classmethod
+    def from_string(Book, book_str):
+        title, author, price = [part.strip() for part in book_str.split(',')]
+        return Book(title, author, float(price))
+    @staticmethod
+    def is_expensive(price):
+        return price > 20.0
+    def apply_discount(self, percentage):
+        discount_amount = self.price*(percentage /100)
+        self.price -= discount_amount
+class Ebook(Book):
+    def __init__(self, title, author, price, file_size):
+        super().__init__(title, author, price)
+        self.file_size = file_size
+    def get_summary(self):
+        return f" Title: {self.title}, Author: {self.author}, Price: ${self.price:.2f}, File Size: {self.file_size}MB"
+def print_summary(self):
+    print(self.get_summary())
+    
+    
+#TEST_CASE
+book1 = Book("1984", "George Orwell", 15.0)
+book1.apply_discount(10)
+print(f"Discounted Price of '{book1.title}': ${book1.price:.2f}")
