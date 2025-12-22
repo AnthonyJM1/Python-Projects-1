@@ -1,0 +1,52 @@
+"""Author: Anthony Molina
+Date Began: 12/20/2025
+Date Completed: TBD
+Description: This program fetches the current price of a specified cryptocurrency
+from the designated cryptocurrency exchange and returns the price. Utilizing, requests
+library, tkinter library, and numpy library,
+"""
+import requests
+import tkinter as tk
+
+
+def get_coin_price(coin_name):
+# An Api or an Application Programming Interface is used to request data from another service.
+    #Coinbase API URL for fetching the current price of a cryptocurrency in USD must be BTC-USD
+    url = f"https://api.coinbase.com/v2/prices/{coin_name.upper()}-USD/spot"
+    try:
+        response = requests.get(url) # Sends a GET request to the url
+        response.raise_for_status() # Raises an HTTPError for a bad responses
+        data = response.json()
+        price= float(data['data']['amount'])
+        return price
+    #Raise an Exception if there is an error fetching the price
+    except (requests.RequestException, ValueError, KeyError) as e:
+        raise Exception(f"Error fetching {coin_name.upper()} price: {e}")
+
+if __name__ == "__main__":
+    #Creating a root window for the GUI
+    root = tk.Tk()
+
+    #Main Window
+    root.geometry("500x500")
+    root.title("Crypto Price Fetcher")
+    
+    #Creating the entry widget for the user to input the cryptocurrency name
+    #Label for context
+    label=tk.Label(root, text_input= (f"Enter the coin you want to fetch data for: ".strip().lower()),bg= "black").pack(fill=tk.Y)
+    label.pack(pady=10)
+    
+    #The entry widget
+    entry= tk.Entry(root, width=50)
+    entry.pack(padx=10)
+    entry.focus()
+    
+    #Button to initiate the fetching of the cryptocurrency price
+    button = tk.Button(root, text= "Fetch Price", price = get_coin_price(input))
+    button.pack()
+    
+    #Return
+    root.bind('<Return>',lambda event: get_coin_print(entry.get()))
+    root.mainloop()
+#Creating a a visual to ask the user about the cryptocurrency they want to fetch data for
+    print(f"We found the price {price}")
