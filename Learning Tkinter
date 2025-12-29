@@ -1,0 +1,12 @@
+from tkinter import *
+import tkinter as Tk
+
+root = Tk.Tk()
+
+#Creating a Label Widget
+myLabel = Tk.Label(root, text="Hello World!")
+
+#Shoving it onto the screen 
+myLabel.pack()
+
+root.mainloop()
